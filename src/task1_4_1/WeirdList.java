@@ -10,7 +10,23 @@ import java.util.List;
 import java.util.ListIterator;
 import java.util.NoSuchElementException;
 
+import com.sun.org.apache.xerces.internal.impl.xpath.XPathException;
+
 public class WeirdList<E> implements List<E>{
+	public static void main(String[]aaaa){
+		String [] s = new String[12];
+		try{
+			s[12] = "sadas";
+			throw new XPathException();
+		}catch(IndexOutOfBoundsException e){
+			System.out.println("eeee");
+		}catch(Exception e1){
+			System.out.println("eeeqwe1");
+		}
+		System.out.println("eeee21");
+
+		s[11] = "nike";
+	}
 	final private List<E> unmodifiableList;
 	final private List<E> modifiableList;
 	final private int unmodifiableListSize;
@@ -225,7 +241,7 @@ public class WeirdList<E> implements List<E>{
 		}
 		return newList;
 	}
-
+	
 	@Override
 	public Object[] toArray() {
 		int size = size();
@@ -256,26 +272,42 @@ public class WeirdList<E> implements List<E>{
 			return newArr;
 		}
 	}
-	/**
-	 * copy/pasted from java.util.AbstractList
-	 */
-	@SuppressWarnings("unchecked")
-	public boolean equals(Object o) {
-		if (o == this)
-			return true;
-		if (!(o instanceof List))
-			return false;
-
-		ListIterator<E> e1 = listIterator();
-		ListIterator<E> e2 = ( (List<E>) o).listIterator();
-		while (e1.hasNext() && e2.hasNext()) {
-			Object o1 = e1.next();
-			Object o2 = e2.next();
-			if (!(o1 == null ? o2 == null : o1.equals(o2)))
-				return false;
-		}
-		return !(e1.hasNext() || e2.hasNext());
+	
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result
+				+ ((modifiableList == null) ? 0 : modifiableList.hashCode());
+		result = prime
+				* result
+				+ ((unmodifiableList == null) ? 0 : unmodifiableList.hashCode());
+		return result;
 	}
+
+	@SuppressWarnings("rawtypes")
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		WeirdList other = (WeirdList) obj;
+		if (modifiableList == null) {
+			if (other.modifiableList != null)
+				return false;
+		} else if (!modifiableList.equals(other.modifiableList))
+			return false;
+		if (unmodifiableList == null) {
+			if (other.unmodifiableList != null)
+				return false;
+		} else if (!unmodifiableList.equals(other.unmodifiableList))
+			return false;
+		return true;
+	}
+
 	private class Iter implements Iterator<E>{
 		protected int cursor;
 		protected int lastReturned = -1;
