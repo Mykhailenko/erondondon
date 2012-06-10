@@ -10,23 +10,7 @@ import java.util.List;
 import java.util.ListIterator;
 import java.util.NoSuchElementException;
 
-import com.sun.org.apache.xerces.internal.impl.xpath.XPathException;
-
 public class WeirdList<E> implements List<E>{
-	public static void main(String[]aaaa){
-		String [] s = new String[12];
-		try{
-			s[12] = "sadas";
-			throw new XPathException();
-		}catch(IndexOutOfBoundsException e){
-			System.out.println("eeee");
-		}catch(Exception e1){
-			System.out.println("eeeqwe1");
-		}
-		System.out.println("eeee21");
-
-		s[11] = "nike";
-	}
 	final private List<E> unmodifiableList;
 	final private List<E> modifiableList;
 	final private int unmodifiableListSize;
@@ -287,27 +271,21 @@ public class WeirdList<E> implements List<E>{
 
 	@SuppressWarnings("rawtypes")
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
+	public boolean equals(Object o) {
+		if (o == this)
 			return true;
-		if (obj == null)
+		if (!(o instanceof List))
 			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		WeirdList other = (WeirdList) obj;
-		if (modifiableList == null) {
-			if (other.modifiableList != null)
+		ListIterator<E> e1 = listIterator();
+		ListIterator e2 = ((List) o).listIterator();
+		while (e1.hasNext() && e2.hasNext()) {
+			E o1 = e1.next();
+			Object o2 = e2.next();
+			if (!(o1 == null ? o2 == null : o1.equals(o2)))
 				return false;
-		} else if (!modifiableList.equals(other.modifiableList))
-			return false;
-		if (unmodifiableList == null) {
-			if (other.unmodifiableList != null)
-				return false;
-		} else if (!unmodifiableList.equals(other.unmodifiableList))
-			return false;
-		return true;
+		}
+		return !(e1.hasNext() || e2.hasNext());
 	}
-
 	private class Iter implements Iterator<E>{
 		protected int cursor;
 		protected int lastReturned = -1;

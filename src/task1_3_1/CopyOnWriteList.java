@@ -3,30 +3,62 @@ package task1_3_1;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
+import java.util.NoSuchElementException;
 
 public class CopyOnWriteList<E> implements List<E>{
 	private Object [] content;
+
 	public CopyOnWriteList() {
 		content = new Object[0];
 	}
-
+	
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + Arrays.hashCode(content);
+		return result;
+	}
+	
+	@SuppressWarnings("rawtypes")
+	@Override
+	public boolean equals(Object o) {
+		if (o == this)
+			return true;
+		if (!(o instanceof List))
+			return false;
+		Iterator<E> e1 = iterator();
+		Iterator e2 = ((List) o).iterator();
+		while (e1.hasNext() && e2.hasNext()) {
+			E o1 = e1.next();
+			Object o2 = e2.next();
+			if (!(o1 == null ? o2 == null : o1.equals(o2)))
+				return false;
+		}
+		return !(e1.hasNext() || e2.hasNext());
+	}
 	@Override
 	public boolean add(E e) {
 		int before = content.length;
-		add(content.length -1 , e);
+		add(content.length, e);
 		return content.length != before;
 	}
 
 	@Override
 	public synchronized void add(int index, E element) {
-		Object [] oldContent = content;
-		content = new Object[content.length+1];
-		System.arraycopy(oldContent, 0, content, 0, index);
-		content[index] = element;
-		System.arraycopy(oldContent, index, content, index+1, oldContent.length-index);
+		if(0 <= index && index <= content.length){
+			Object [] oldContent = content;
+			content = new Object[content.length+1];
+			System.arraycopy(oldContent, 0, content, 0, index);
+			content[index] = element;
+			System.arraycopy(oldContent, index, content, index+1, oldContent.length-index);
+		}else{
+			throw new IndexOutOfBoundsException();
+		}
 	}
 
 	@Override
@@ -36,7 +68,6 @@ public class CopyOnWriteList<E> implements List<E>{
 		}
 		return !c.isEmpty();
 	}
-
 	@SuppressWarnings("unchecked")
 	@Override
 	public boolean addAll(int index, Collection<? extends E> c) {
@@ -81,7 +112,11 @@ public class CopyOnWriteList<E> implements List<E>{
 	@SuppressWarnings("unchecked")
 	@Override
 	public E get(int index) {
-		return (E) content[index];
+		if(0 <= index && index < content.length){
+			return (E) content[index];
+		}else{
+			throw new IndexOutOfBoundsException();
+		}
 	}
 
 	@Override
@@ -101,9 +136,40 @@ public class CopyOnWriteList<E> implements List<E>{
 
 	@Override
 	public Iterator<E> iterator() {
-		return null;
+		return new Iter(content);
 	}
+	private class Iter implements Iterator<E>{
+		private int cursor;
+		private int lastReturned;
+		private Object [] content;
+		public Iter(Object [] content) {
+			this.content = content;
+			cursor = 0;
+			lastReturned = -1;
+		}
+		
+		@Override
+		public boolean hasNext() {
+			return cursor != content.length;
+		}
 
+		@SuppressWarnings("unchecked")
+		@Override
+		public E next() {
+			if(cursor >= content.length){
+				throw new NoSuchElementException();
+			}
+			lastReturned = cursor;
+			++cursor;
+			return (E) content[lastReturned];
+		}
+
+		@Override
+		public void remove() {
+			throw new UnsupportedOperationException();
+		}
+		
+	}
 	@Override
 	public int lastIndexOf(Object o) {
 		for(int i = content.length-1; i >= 0; --i){
@@ -135,9 +201,18 @@ public class CopyOnWriteList<E> implements List<E>{
 		}
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public E remove(int index) {
-		return null;
+		if(0 <= index && index < content.length && content.length > 0){
+			Object [] oldContent = content;
+			content = new Object[content.length - 1];
+			System.arraycopy(oldContent, 0, content, 0, index);
+			System.arraycopy(oldContent, index + 1, content, index, oldContent.length - index - 1);
+			return (E) oldContent[index];
+		}else{
+			throw new IndexOutOfBoundsException();
+		}
 	}
 	
 	@Override
@@ -159,10 +234,16 @@ public class CopyOnWriteList<E> implements List<E>{
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public E set(int index, E element) {
-		E e = (E) content[index];
-		content[index] = element;
-		return e;
+	public synchronized E set(int index, E element) {
+		if(0 <= index && index < content.length){
+			Object [] oldContent = content;
+			content = Arrays.copyOf(oldContent, oldContent.length);
+			E e = (E) content[index];
+			content[index] = element;
+			return e;
+		}else{
+			throw new IndexOutOfBoundsException();
+		}
 	}
 
 	@Override

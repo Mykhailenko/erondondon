@@ -10,7 +10,6 @@ import java.util.ListIterator;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.experimental.categories.Categories.ExcludeCategory;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -145,7 +144,7 @@ public class WeirdListTest {
 	
 	@Test
 	public void isEmptyTest1() {
-		WeirdList w = new WeirdList(Collections.emptyList(), Collections.emptyList());
+		WeirdList<?> w = new WeirdList<Object>(Collections.emptyList(), Collections.emptyList());
 		assertTrue(w.isEmpty());
 	}
 
@@ -343,8 +342,8 @@ public class WeirdListTest {
 
 	@Test
 	public void subListTest() {
-		List lst = weirdList.subList(2, 5);
-		List expected = Arrays.asList("nessesary_service_2",
+		List<String> lst = weirdList.subList(2, 5);
+		List<String> expected = Arrays.asList("nessesary_service_2",
 				"waste_money_service_0", "waste_money_service_1");
 		assertTrue(expected.equals(lst));
 	}

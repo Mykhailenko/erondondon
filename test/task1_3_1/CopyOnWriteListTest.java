@@ -2,6 +2,7 @@ package task1_3_1;
 
 import java.util.Iterator;
 import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -27,10 +28,19 @@ public class CopyOnWriteListTest {
 		assertEquals("1", it.next());
 		assertEquals("2", it.next());
 		Iterator<String> it1 = list.iterator();
-		it.remove();
+		list.remove(2);
 		Iterator<String> it2 = list.iterator();
+		assertEquals("3", it.next());
 		assertEquals("4", it.next());
 		assertEquals("5", it.next());
+		
+		list.add("6");
+		Iterator<String> it3 = list.iterator();
+		assertEquals("1", it3.next());
+		assertEquals("2", it3.next());
+		assertEquals("4", it3.next());
+		assertEquals("5", it3.next());
+		assertEquals("6", it3.next());
 		
 		assertEquals("1", it1.next());
 		assertEquals("2", it1.next());
@@ -42,5 +52,7 @@ public class CopyOnWriteListTest {
 		assertEquals("2", it2.next());
 		assertEquals("4", it2.next());
 		assertEquals("5", it2.next());
+		
+		
 	}
 }
