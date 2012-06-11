@@ -5,13 +5,20 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
+import task1_2.GlebList;
+
+
 
 public class ListBanchmark {
 	@SuppressWarnings("unchecked")
 	public static void main(String [] args){
+		new ListBanchmark((Class<? extends List<Integer>>) GlebList.class);
 		new ListBanchmark((Class<? extends List<Integer>>) ArrayList.class);
-		new ListBanchmark((Class<? extends List<Integer>>) LinkedList.class);
+//		new ListBanchmark((Class<? extends List<Integer>>) LinkedList.class);
 		
+	}
+	private void printTime(long time){
+		System.out.println(Thread.currentThread().getStackTrace()[2].getMethodName() + " : " + time);
 	}
 	private Class<? extends List<Integer>> cls;
 	public ListBanchmark(Class<? extends List<Integer>> cls) {
@@ -49,7 +56,7 @@ public class ListBanchmark {
 		long start = System.nanoTime();
 		list.subList(from, from + subListSize);
 		long time = System.nanoTime() - start;
-		System.out.println(Thread.currentThread().getStackTrace()[1].getMethodName() + " : " + time);
+		printTime(time);
 	}
 	private void addToStart(int times, int startSize){
 		List<Integer> list = createAndFillTheList(startSize);
@@ -58,7 +65,8 @@ public class ListBanchmark {
 			list.add(0, i);
 		}
 		long time = System.nanoTime() - start;
-		System.out.println(Thread.currentThread().getStackTrace()[1].getMethodName() + " : " + (time / times));
+		printTime((time / times));
+		
 	}
 	private void addToMiddle(int times, int startSize){
 		List<Integer> list = createAndFillTheList(startSize);
@@ -68,7 +76,7 @@ public class ListBanchmark {
 			list.add(middleIndex, i);
 		}
 		long time = System.nanoTime() - start;
-		System.out.println(Thread.currentThread().getStackTrace()[1].getMethodName() + " : " + (time / times));
+		printTime((time / times));
 	}
 	private void addToEnd(int times, int startSize){
 		List<Integer> list = createAndFillTheList(startSize);
@@ -77,8 +85,9 @@ public class ListBanchmark {
 			list.add(i);
 		}
 		long time = System.nanoTime() - start;
-		System.out.println(Thread.currentThread().getStackTrace()[1].getMethodName() + " : " + (time / times));
+		printTime((time / times));
 	}
+	@SuppressWarnings("unused")
 	private void createByAddToStart(int finalSize){
 		List<Integer> list = createAndFillTheList(0);
 		long start = System.nanoTime();
@@ -86,8 +95,9 @@ public class ListBanchmark {
 			list.add(0, i);
 		}
 		long time = System.nanoTime() - start;
-		System.out.println(Thread.currentThread().getStackTrace()[1].getMethodName() + " : " + time);
+		printTime(time);
 	}
+	@SuppressWarnings("unused")
 	private void createByAddToMiddle(int finalSize){
 		List<Integer> list = createAndFillTheList(0);
 		long start = System.nanoTime();
@@ -95,7 +105,7 @@ public class ListBanchmark {
 			list.add(list.size()/2, i);
 		}
 		long time = System.nanoTime() - start;
-		System.out.println(Thread.currentThread().getStackTrace()[1].getMethodName() + " : " + time);
+		printTime(time);
 	}
 	private void createByAddToEnd(int finalSize){
 		List<Integer> list = createAndFillTheList(0);
@@ -104,7 +114,7 @@ public class ListBanchmark {
 			list.add(i);
 		}
 		long time = System.nanoTime() - start;
-		System.out.println(Thread.currentThread().getStackTrace()[1].getMethodName() + " : " + time);
+		printTime(time);
 	}
 	private void removeFromStart(int times, int startSize){
 		List<Integer> list = createAndFillTheList(startSize);
@@ -113,7 +123,7 @@ public class ListBanchmark {
 			list.remove(0);
 		}
 		long time = System.nanoTime() - start;
-		System.out.println(Thread.currentThread().getStackTrace()[1].getMethodName() + " : " + (time / times));
+		printTime((time / times));
 	}
 	private void removeFromMiddle(int times, int startSize){
 		List<Integer> list = createAndFillTheList(startSize);
@@ -123,7 +133,7 @@ public class ListBanchmark {
 			list.remove(middleIndex);
 		}
 		long time = System.nanoTime() - start;
-		System.out.println(Thread.currentThread().getStackTrace()[1].getMethodName() + " : " + (time / times));
+		printTime((time / times));
 	}
 	private void removeFromEnd(int times, int startSize){
 		List<Integer> list = createAndFillTheList(startSize);
@@ -132,7 +142,7 @@ public class ListBanchmark {
 			list.remove(list.size() - 1);
 		}
 		long time = System.nanoTime() - start;
-		System.out.println(Thread.currentThread().getStackTrace()[1].getMethodName() + " : " + (time / times));
+		printTime((time / times));
 	}
 	private void getFromStart(int times, int startSize){
 		List<Integer> list = createAndFillTheList(startSize);
@@ -141,7 +151,7 @@ public class ListBanchmark {
 			list.get(0);
 		}
 		long time = System.nanoTime() - start;
-		System.out.println(Thread.currentThread().getStackTrace()[1].getMethodName() + " : " + (time / times));
+		printTime((time / times));
 	}
 	private void getFromMiddle(int times, int startSize){
 		List<Integer> list = createAndFillTheList(startSize);
@@ -151,7 +161,7 @@ public class ListBanchmark {
 			list.get(middleIndex);
 		}
 		long time = System.nanoTime() - start;
-		System.out.println(Thread.currentThread().getStackTrace()[1].getMethodName() + " : " + (time / times));
+		printTime((time / times));
 	}
 	private void getFromEnd(int times, int startSize){
 		List<Integer> list = createAndFillTheList(startSize);
@@ -160,7 +170,7 @@ public class ListBanchmark {
 			list.get(list.size() - 1);
 		}
 		long time = System.nanoTime() - start;
-		System.out.println(Thread.currentThread().getStackTrace()[1].getMethodName() + " : " + (time / times));
+		printTime((time / times));
 	
 	}
 	private void iterateThrowList(int startSize){
@@ -169,7 +179,7 @@ public class ListBanchmark {
 		for(Iterator<Integer> it = list.iterator(); 
 				it.hasNext(); it.next());
 		long time = System.nanoTime() - start;
-		System.out.println(Thread.currentThread().getStackTrace()[1].getMethodName() + " : " + time);
+		printTime(time);
 	}
 	private List<Integer> createAndFillTheList(int size){
 		List<Integer> result = null;
