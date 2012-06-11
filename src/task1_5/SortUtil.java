@@ -6,35 +6,8 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.ListIterator;
 
-public class MyCollections {
-	public static void main(String [] args){
-		List<Integer> list = new ArrayList<Integer>();
-		list.add(24);
-		list.add(883);
-		list.add(10);
-		list.add(-4);
-		list.add(3);
-		list.add(21);
-		list.add(11);
-		for(Integer i : list){
-			System.out.print(i + " ");
-		}
-		System.out.println();
-		MyCollections.sort(list, new Comparator<Integer>() {
-			public int compare(Integer o1, Integer o2) {
-				if(o1 % 2 == 0 && o2 % 2 == 1){
-					return 1;
-				}else if(o1 % 2 == 1 && o2 % 2 == 0){
-					return -1;
-				}else{
-					return 0;
-				}
-			};
-		});
-		for(Integer i : list){
-			System.out.print(i + " ");
-		}
-	}
+public class SortUtil {
+	
     @SuppressWarnings("unchecked")
 	public static <T extends Comparable<? super T>> void sort(List<T> list) {
     	Object [] arr = list.toArray();

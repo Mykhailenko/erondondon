@@ -1,15 +1,18 @@
 package task1;
 
+import java.text.MessageFormat;
+
 public abstract class Product {
 	private String id;
 	private String title;
 	private String producer;
 	private String description;
-	public Product() {
+	protected Product() {
+		super();
 	}
 	
 	
-	public Product(String id, String title, String producer, String description) {
+	protected Product(String id, String title, String producer, String description) {
 		super();
 		this.id = id;
 		this.title = title;
@@ -20,8 +23,9 @@ public abstract class Product {
 
 	@Override
 	public String toString() {
-		return "Product [id=" + id + ", title=" + title + ", producer="
-				+ producer + ", description=" + description + "]";
+		return MessageFormat.format(
+				"Product [id={0}, title={1}, producer={2}, description={3}]",
+				id, title, producer, description);
 	}
 
 
@@ -41,7 +45,7 @@ public abstract class Product {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Product other = (Product) obj;
+		final Product other = (Product) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;

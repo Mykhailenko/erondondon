@@ -1,5 +1,7 @@
 package task1;
 
+import java.text.MessageFormat;
+
 public class MobileDevice extends Product{
 	public enum OS {
 		Android, iOS, Windows_7, Tablet_OS, Bada, MeeGo, Symbian; 
@@ -28,11 +30,10 @@ public class MobileDevice extends Product{
 
 	@Override
 	public String toString() {
-		return "MobileDevice [diagonal=" + diagonal + ", os=" + os
-				+ ", batteryCapacity=" + batteryCapacity + ", GPS=" + GPS
-				+ ", getTitle()=" + getTitle() + ", getProducer()="
-				+ getProducer() + ", getId()=" + getId()
-				+ ", getDescription()=" + getDescription() + "]";
+		return MessageFormat
+				.format("MobileDevice [diagonal={0}, os={1}, batteryCapacity={2}, GPS={3}, getTitle()={4}, getProducer()={5}, getId()={6}, getDescription()={7}]",
+						diagonal, os, batteryCapacity, GPS, getTitle(),
+						getProducer(), getId(), getDescription());
 	}
 
 	public double getDiagonal() {

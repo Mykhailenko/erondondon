@@ -11,9 +11,9 @@ import java.util.ListIterator;
 import java.util.NoSuchElementException;
 
 public class WeirdList<E> implements List<E>{
-	final private List<E> unmodifiableList;
-	final private List<E> modifiableList;
-	final private int unmodifiableListSize;
+	private final List<E> unmodifiableList;
+	private final List<E> modifiableList;
+	private final int unmodifiableListSize;
 	
 	public WeirdList(List<E> unmodifiableList,	List<E> modifiableList	) {
 		super();
@@ -97,11 +97,11 @@ public class WeirdList<E> implements List<E>{
 
 	@Override
 	public int indexOf(Object arg0) {
-		int indexUnmod = unmodifiableList.indexOf(arg0);
+		final int indexUnmod = unmodifiableList.indexOf(arg0);
 		if(indexUnmod >= 0){
 			return indexUnmod;
 		}
-		int indexMod = modifiableList.indexOf(arg0);
+		final int indexMod = modifiableList.indexOf(arg0);
 		if(indexMod >= 0){
 			return indexMod + unmodifiableListSize;
 		}else{
@@ -121,11 +121,11 @@ public class WeirdList<E> implements List<E>{
 
 	@Override
 	public int lastIndexOf(Object arg0) {
-		int indexMod = modifiableList.lastIndexOf(arg0);
+		final int indexMod = modifiableList.lastIndexOf(arg0);
 		if(indexMod >= 0){
 			return indexMod + unmodifiableListSize;
 		}
-		int indexUnmod = unmodifiableList.lastIndexOf(arg0);
+		final int indexUnmod = unmodifiableList.lastIndexOf(arg0);
 		if(indexUnmod >= 0){
 			return indexUnmod;
 		}else{
@@ -174,13 +174,13 @@ public class WeirdList<E> implements List<E>{
 			}
 		}
 		if(noOneInUnmodifiableList){
-			int sizeBefore = size();
+			final int sizeBefore = size();
 			for(Object o : c){
 				while(modifiableList.contains(o)){
 					modifiableList.remove(o);
 				}
 			}
-			int sizeAfter = size();
+			final int sizeAfter = size();
 			return sizeBefore != sizeAfter;
 		}else{
 			throw new ReadOnlyBufferException();
@@ -190,13 +190,13 @@ public class WeirdList<E> implements List<E>{
 	@Override
 	public boolean retainAll(Collection<?> c) {
 		if(c.containsAll(unmodifiableList)){
-			int sizeBefore = size();
+			final int sizeBefore = size();
 			for(int i = modifiableList.size()-1; i >= 0; --i){
 				if(!c.contains(modifiableList.get(i))){
 					modifiableList.remove(i);
 				}
 			}
-			int sizeAfter = size();
+			final int sizeAfter = size();
 			return sizeBefore != sizeAfter;
 		}else{
 			throw new ReadOnlyBufferException();
@@ -219,7 +219,7 @@ public class WeirdList<E> implements List<E>{
 
 	@Override
 	public List<E> subList(int from, int to) {
-		List<E> newList = new ArrayList<E>();
+		final List<E> newList = new ArrayList<E>();
 		for(int index = from; index < to; ++index){
 			newList.add(get(index));
 		}
@@ -228,13 +228,13 @@ public class WeirdList<E> implements List<E>{
 	
 	@Override
 	public Object[] toArray() {
-		int size = size();
-		Object [] result = new Object[size];
+		final int size = size();
+		final Object [] result = new Object[size];
 		copyContentToArray(result);
 		return result;
 	}
 	private void copyContentToArray(Object [] arr){
-		int size = size();
+		final int size = size();
 		for(int i = 0; i < size; ++i){
 			arr[i] = get(i);
 		}
@@ -242,7 +242,7 @@ public class WeirdList<E> implements List<E>{
 	@SuppressWarnings("unchecked")
 	@Override
 	public <T> T[] toArray(T[] arr) {
-		int size = size();
+		final int size = size();
 		if(arr.length == size){
 			copyContentToArray(arr);
 			return arr;
@@ -251,7 +251,7 @@ public class WeirdList<E> implements List<E>{
 			Arrays.fill(arr, size, arr.length, null);
 			return arr;
 		}else{
-			T[] newArr = (T[]) Array.newInstance(arr.getClass().getComponentType(), size);
+			final T[] newArr = (T[]) Array.newInstance(arr.getClass().getComponentType(), size);
 			copyContentToArray(newArr);
 			return newArr;
 		}
@@ -276,8 +276,8 @@ public class WeirdList<E> implements List<E>{
 			return true;
 		if (!(o instanceof List))
 			return false;
-		ListIterator<E> e1 = listIterator();
-		ListIterator e2 = ((List) o).listIterator();
+		final ListIterator<E> e1 = listIterator();
+		final ListIterator e2 = ((List) o).listIterator();
 		while (e1.hasNext() && e2.hasNext()) {
 			E o1 = e1.next();
 			Object o2 = e2.next();
@@ -315,7 +315,7 @@ public class WeirdList<E> implements List<E>{
 		}
 	}
 	private class ListIter extends Iter implements ListIterator<E>{
-		public ListIter(int index) {
+		private ListIter(int index) {
 			super();
 			cursor = index;
 		}

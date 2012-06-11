@@ -50,61 +50,61 @@ public class ListBanchmark {
 		iterateThrowList(startSize);
 	}
 	private void subList(int startSize){
-		List<Integer> list = createAndFillTheList(startSize);
-		int subListSize = startSize / 3;
-		int from = startSize / 4;
-		long start = System.nanoTime();
+		final List<Integer> list = createAndFillTheList(startSize);
+		final int subListSize = startSize / 3;
+		final int from = startSize / 4;
+		final long start = System.nanoTime();
 		list.subList(from, from + subListSize);
-		long time = System.nanoTime() - start;
+		final long time = System.nanoTime() - start;
 		printTime(time);
 	}
 	private void addToStart(int times, int startSize){
-		List<Integer> list = createAndFillTheList(startSize);
-		long start = System.nanoTime();
+		final List<Integer> list = createAndFillTheList(startSize);
+		final long start = System.nanoTime();
 		for(int i = 0; i < times; ++i){
 			list.add(0, i);
 		}
-		long time = System.nanoTime() - start;
+		final long time = System.nanoTime() - start;
 		printTime((time / times));
 		
 	}
 	private void addToMiddle(int times, int startSize){
-		List<Integer> list = createAndFillTheList(startSize);
-		int middleIndex = startSize / 2;
-		long start = System.nanoTime();
+		final List<Integer> list = createAndFillTheList(startSize);
+		final int middleIndex = startSize / 2;
+		final long start = System.nanoTime();
 		for(int i = 0; i < times; ++i){
 			list.add(middleIndex, i);
 		}
-		long time = System.nanoTime() - start;
+		final long time = System.nanoTime() - start;
 		printTime((time / times));
 	}
 	private void addToEnd(int times, int startSize){
-		List<Integer> list = createAndFillTheList(startSize);
-		long start = System.nanoTime();
+		final List<Integer> list = createAndFillTheList(startSize);
+		final long start = System.nanoTime();
 		for(int i = 0; i < times; ++i){
 			list.add(i);
 		}
-		long time = System.nanoTime() - start;
+		final long time = System.nanoTime() - start;
 		printTime((time / times));
 	}
 	@SuppressWarnings("unused")
 	private void createByAddToStart(int finalSize){
-		List<Integer> list = createAndFillTheList(0);
-		long start = System.nanoTime();
+		final List<Integer> list = createAndFillTheList(0);
+		final long start = System.nanoTime();
 		for(int i = 0; i < finalSize; ++i){
 			list.add(0, i);
 		}
-		long time = System.nanoTime() - start;
+		final long time = System.nanoTime() - start;
 		printTime(time);
 	}
 	@SuppressWarnings("unused")
 	private void createByAddToMiddle(int finalSize){
 		List<Integer> list = createAndFillTheList(0);
-		long start = System.nanoTime();
+		final long start = System.nanoTime();
 		for(int i = 0; i < finalSize; ++i){
 			list.add(list.size()/2, i);
 		}
-		long time = System.nanoTime() - start;
+		final long time = System.nanoTime() - start;
 		printTime(time);
 	}
 	private void createByAddToEnd(int finalSize){

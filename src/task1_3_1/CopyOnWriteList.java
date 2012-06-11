@@ -30,8 +30,8 @@ public class CopyOnWriteList<E> implements List<E>{
 			return true;
 		if (!(o instanceof List))
 			return false;
-		Iterator<E> e1 = iterator();
-		Iterator e2 = ((List) o).iterator();
+		final Iterator<E> e1 = iterator();
+		final Iterator e2 = ((List) o).iterator();
 		while (e1.hasNext() && e2.hasNext()) {
 			E o1 = e1.next();
 			Object o2 = e2.next();
@@ -42,7 +42,7 @@ public class CopyOnWriteList<E> implements List<E>{
 	}
 	@Override
 	public boolean add(E e) {
-		int before = content.length;
+		final int before = content.length;
 		add(content.length, e);
 		return content.length != before;
 	}
@@ -50,7 +50,7 @@ public class CopyOnWriteList<E> implements List<E>{
 	@Override
 	public synchronized void add(int index, E element) {
 		if(0 <= index && index <= content.length){
-			Object [] oldContent = content;
+			final Object [] oldContent = content;
 			content = new Object[content.length+1];
 			System.arraycopy(oldContent, 0, content, 0, index);
 			content[index] = element;
@@ -70,7 +70,7 @@ public class CopyOnWriteList<E> implements List<E>{
 	@SuppressWarnings("unchecked")
 	@Override
 	public boolean addAll(int index, Collection<? extends E> c) {
-		Iterator<E> it = (Iterator<E>) c.iterator();
+		final Iterator<E> it = (Iterator<E>) c.iterator();
 		int i = 0;
 		while(it.hasNext()){
 			E e = it.next();
@@ -140,8 +140,8 @@ public class CopyOnWriteList<E> implements List<E>{
 	private class Iter implements Iterator<E>{
 		private int cursor;
 		private int lastReturned;
-		private Object [] content;
-		public Iter(Object [] content) {
+		final private Object [] content;
+		private Iter(Object [] content) {
 			this.content = content;
 			cursor = 0;
 			lastReturned = -1;
@@ -191,7 +191,7 @@ public class CopyOnWriteList<E> implements List<E>{
 
 	@Override
 	public boolean remove(Object o) {
-		int index = indexOf(o);
+		final int index = indexOf(o);
 		if(index != -1){
 			remove(index);
 			return true;
@@ -204,7 +204,7 @@ public class CopyOnWriteList<E> implements List<E>{
 	@Override
 	public E remove(int index) {
 		if(0 <= index && index < content.length && content.length > 0){
-			Object [] oldContent = content;
+			final Object [] oldContent = content;
 			content = new Object[content.length - 1];
 			System.arraycopy(oldContent, 0, content, 0, index);
 			System.arraycopy(oldContent, index + 1, content, index, oldContent.length - index - 1);
@@ -235,9 +235,9 @@ public class CopyOnWriteList<E> implements List<E>{
 	@Override
 	public synchronized E set(int index, E element) {
 		if(0 <= index && index < content.length){
-			Object [] oldContent = content;
+			final Object [] oldContent = content;
 			content = Arrays.copyOf(oldContent, oldContent.length);
-			E e = (E) content[index];
+			final E e = (E) content[index];
 			content[index] = element;
 			return e;
 		}else{
@@ -253,7 +253,7 @@ public class CopyOnWriteList<E> implements List<E>{
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Override
 	public List<E> subList(int fromIndex, int toIndex) {
-		Object [] arr = new Object[toIndex-fromIndex];
+		final Object [] arr = new Object[toIndex-fromIndex];
 		System.arraycopy(content, 0, arr, 0, arr.length);
 		return new ArrayList(Arrays.asList(arr));
 	}

@@ -10,7 +10,7 @@ import static org.junit.Assert.assertFalse;
 public class GlebListTest {
 	@Test
 	public void addTest(){
-		GlebList<String> list = new GlebList<String>();
+		final GlebList<String> list = new GlebList<String>();
 		list.add("ololo");
 		list.add("eee");
 		assertFalse(list.isEmpty());
@@ -21,7 +21,7 @@ public class GlebListTest {
 	
 	@Test
 	public void addTest1(){
-		GlebList<String> list = new GlebList<String>();
+		final GlebList<String> list = new GlebList<String>();
 		list.add(0, "ololo");
 		list.add(1, "eee");
 		list.add(0, "ttt");
@@ -82,11 +82,7 @@ public class GlebListTest {
 				String s = (String) o;
 				if(s.length() > 0){
 					char ch = s.charAt(0);
-					if(ch == 'e') {
-						return false;
-					} else{
-						return true; 
-					}
+					return ch != 'e';
 				}else{
 					return true;
 				}

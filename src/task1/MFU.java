@@ -1,5 +1,7 @@
 package task1;
 
+import java.text.MessageFormat;
+
 public class MFU extends OfficeEquipment{
 	public enum OpticalResolution {
 		dpi300x300,
@@ -35,14 +37,11 @@ public class MFU extends OfficeEquipment{
 	
 	@Override
 	public String toString() {
-		return "MFU [LAN=" + LAN + ", cardReader=" + cardReader
-				+ ", opticalResolution=" + opticalResolution + ", getFormat()="
-				+ getFormat() + ", getPrintingTechnology()="
-				+ getPrintingTechnology() + ", isColorPrinting()="
-				+ isColorPrinting() + ", isWifi()=" + isWifi()
-				+ ", isUsb2_0()=" + isUsb2_0() + ", getTitle()=" + getTitle()
-				+ ", getProducer()=" + getProducer() + ", getId()=" + getId()
-				+ ", getDescription()=" + getDescription() + "]";
+		return MessageFormat
+				.format("MFU [LAN={0}, cardReader={1}, opticalResolution={2}, getFormat()={3}, getPrintingTechnology()={4}, isColorPrinting()={5}, isWifi()={6}, isUsb2_0()={7}, getTitle()={8}, getProducer()={9}, getId()={10}, getDescription()={11}]",
+						LAN, cardReader, opticalResolution, getFormat(), getPrintingTechnology(),
+						isColorPrinting(), isWifi(), isUsb2_0(), getTitle(), getProducer(),
+						getId(), getDescription());
 	}
 
 	public boolean isLAN() {

@@ -90,7 +90,7 @@ public class GlebList<T> implements AdvancedList<T>{
 
 	@Override
 	public boolean add(T e) {
-		int before = size;
+		final int before = size;
 		add(size, e);
 		return size != before;
 	}
@@ -105,7 +105,7 @@ public class GlebList<T> implements AdvancedList<T>{
 	@Override
 	public boolean addAll(int index, Collection<? extends T> c) {
 		if(0 <= index && index <= size){
-			Iterator<T> it = (Iterator<T>) c.iterator();
+			final Iterator<T> it = (Iterator<T>) c.iterator();
 			int i = 0;
 			while(it.hasNext()){
 				T e = it.next();
@@ -122,7 +122,7 @@ public class GlebList<T> implements AdvancedList<T>{
 	public void add(int index, T e) {
 		if(0 <= index && index <= size){
 			expandIfNeed(size + 1);
-			Object [] shiftArray = Arrays.copyOfRange(content, index, size);
+			final Object [] shiftArray = Arrays.copyOfRange(content, index, size);
 			content[index] = e;
 			System.arraycopy(shiftArray, 0, content, index + 1, shiftArray.length);
 			++size;
@@ -136,8 +136,8 @@ public class GlebList<T> implements AdvancedList<T>{
 		assert needSize >= 0;
 		if(needSize == content.length){
 			if(content.length < Integer.MAX_VALUE / K){
-				int newSize = (int) (content.length * K);
-				Object [] oldContent = content;
+				final int newSize = (int) (content.length * K);
+				final Object [] oldContent = content;
 				content = new Object[newSize];
 				System.arraycopy(oldContent, 0, content, 0, oldContent.length);
 			}else{
@@ -148,7 +148,7 @@ public class GlebList<T> implements AdvancedList<T>{
 	private void collapseIfNeed(int needSize){
 		assert needSize >= 0;
 		if(needSize * K < content.length){
-			Object [] oldContent = content;
+			final Object [] oldContent = content;
 			content = new Object[needSize];
 			System.arraycopy(oldContent, 0, content, 0, needSize);
 		}
@@ -156,7 +156,7 @@ public class GlebList<T> implements AdvancedList<T>{
 	
 	@Override
 	public boolean remove(Object o) {
-		int index = indexOf(o);
+		final int index = indexOf(o);
 		if(index != -1){
 			remove(index);
 			return true;
@@ -181,7 +181,7 @@ public class GlebList<T> implements AdvancedList<T>{
 	@Override
 	public T remove(int index) {
 		if(0 <= index && index < size && size > 0){
-			Object [] oldContent = content;
+			final Object [] oldContent = content;
 			content = new Object[size - 1];
 			System.arraycopy(oldContent, 0, content, 0, index);
 			System.arraycopy(oldContent, index + 1, content, index, size - index - 1);
@@ -222,7 +222,7 @@ public class GlebList<T> implements AdvancedList<T>{
 	@Override
 	public T set(int index, T e) {
 		if(0 <= index && index < size){
-			T old = (T) content[index];
+			final T old = (T) content[index];
 			content[index] = e;
 			return old;
 		}else{
@@ -267,7 +267,7 @@ public class GlebList<T> implements AdvancedList<T>{
 	@Override
 	public List<T> subList(int fromIndex, int toIndex) {
 		if (fromIndex > 0 && toIndex <= size && fromIndex <= toIndex){
-			Object [] arr = new Object[toIndex-fromIndex];
+			final Object [] arr = new Object[toIndex-fromIndex];
 			System.arraycopy(content, 0, arr, 0, arr.length);
 			return new ArrayList(Arrays.asList(arr));
 		}else{
@@ -280,11 +280,11 @@ public class GlebList<T> implements AdvancedList<T>{
 		return new FilterIterator(predicate);
 	}
 	private class FilterIterator implements Iterator<T>{
-		private Predicate predicate;
+		final private Predicate predicate;
 		private Object nextObject;
 		private int currentPosition;
 		private int lastReturned;
-		public FilterIterator(Predicate predicate) {
+		private FilterIterator(Predicate predicate) {
 			this.predicate = predicate;
 			this.nextObject = null;
 			this.currentPosition = 0;
@@ -311,7 +311,7 @@ public class GlebList<T> implements AdvancedList<T>{
 		public T next() {
 			if(nextObject != null){
 				lastReturned = currentPosition - 1;
-				T ret =  (T) nextObject;
+				final T ret =  (T) nextObject;
 				nextObject = null;
 				return ret;
 			}else{

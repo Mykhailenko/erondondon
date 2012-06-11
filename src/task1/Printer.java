@@ -1,5 +1,7 @@
 package task1;
 
+import java.text.MessageFormat;
+
 import task1.MFU.OpticalResolution;
 
 public class Printer extends OfficeEquipment{
@@ -14,13 +16,10 @@ public class Printer extends OfficeEquipment{
 	}
 	@Override
 	public String toString() {
-		return "Printer [getFormat()=" + getFormat()
-				+ ", getPrintingTechnology()=" + getPrintingTechnology()
-				+ ", isColorPrinting()=" + isColorPrinting() + ", isWifi()="
-				+ isWifi() + ", isUsb2_0()=" + isUsb2_0() + ", getTitle()="
-				+ getTitle() + ", getProducer()=" + getProducer()
-				+ ", getId()=" + getId() + ", getDescription()="
-				+ getDescription() + "]";
+		return MessageFormat
+				.format("Printer [getFormat()={0}, getPrintingTechnology()={1}, isColorPrinting()={2}, isWifi()={3}, isUsb2_0()={4}, getTitle()={5}, getProducer()={6}, getId()={7}, getDescription()={8}]",
+						getFormat(), getPrintingTechnology(), isColorPrinting(), isWifi(), isUsb2_0(),
+						getTitle(), getProducer(), getId(), getDescription());
 	}
 	
 }

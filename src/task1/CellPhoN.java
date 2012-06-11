@@ -1,6 +1,7 @@
 package task1;
 
 import java.awt.Color;
+import java.text.MessageFormat;
 
 public class CellPhoN extends MobileDevice {
 	public enum ShellType {
@@ -35,14 +36,11 @@ public class CellPhoN extends MobileDevice {
 
 	@Override
 	public String toString() {
-		return "CellPhoN [shellType=" + shellType + ", sensor=" + sensor
-				+ ", numberOfSims=" + numberOfSims + ", bluetooth=" + bluetooth
-				+ ", wifi=" + wifi + ", color=" + color + ", getDiagonal()="
-				+ getDiagonal() + ", getOs()=" + getOs()
-				+ ", getBatteryCapacity()=" + getBatteryCapacity()
-				+ ", isGPS()=" + isGPS() + ", getTitle()=" + getTitle()
-				+ ", getProducer()=" + getProducer() + ", getId()=" + getId()
-				+ ", getDescription()=" + getDescription() + "]";
+		return MessageFormat
+				.format("CellPhoN [shellType={0}, sensor={1}, numberOfSims={2}, bluetooth={3}, wifi={4}, color={5}, getDiagonal()={6}, getOs()={7}, getBatteryCapacity()={8}, isGPS()={9}, getTitle()={10}, getProducer()={11}, getId()={12}, getDescription()={13}]",
+						shellType, sensor, numberOfSims, bluetooth, wifi, color,
+						getDiagonal(), getOs(), getBatteryCapacity(), isGPS(), getTitle(),
+						getProducer(), getId(), getDescription());
 	}
 
 	public ShellType getShellType() {

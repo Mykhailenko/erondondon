@@ -1,5 +1,7 @@
 package task1;
 
+import java.text.MessageFormat;
+
 public class OfficeEquipment extends Product {
 	public enum Format {
 		A5, A4, A3;
@@ -32,11 +34,10 @@ public class OfficeEquipment extends Product {
 	
 	@Override
 	public String toString() {
-		return "OfficeEquipment [format=" + format + ", printingTechnology="
-				+ printingTechnology + ", colorPrinting=" + colorPrinting
-				+ ", wifi=" + wifi + ", usb2_0=" + usb2_0 + ", getTitle()="
-				+ getTitle() + ", getProducer()=" + getProducer()
-				+ ", getDescription()=" + getDescription() + "]";
+		return MessageFormat
+				.format("OfficeEquipment [format={0}, printingTechnology={1}, colorPrinting={2}, wifi={3}, usb2_0={4}, getTitle()={5}, getProducer()={6}, getDescription()={7}]",
+						format, printingTechnology, colorPrinting, wifi, usb2_0, getTitle(),
+						getProducer(), getDescription());
 	}
 
 	public Format getFormat() {
