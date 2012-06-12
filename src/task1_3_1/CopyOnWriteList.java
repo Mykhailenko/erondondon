@@ -135,14 +135,14 @@ public class CopyOnWriteList<E> implements List<E>{
 
 	@Override
 	public Iterator<E> iterator() {
-		return new Iter(content);
+		return new Iter();
 	}
 	private class Iter implements Iterator<E>{
 		private int cursor;
 		private int lastReturned;
 		final private Object [] content;
-		private Iter(Object [] content) {
-			this.content = content;
+		private Iter() {
+			this.content = CopyOnWriteList.this.content;
 			cursor = 0;
 			lastReturned = -1;
 		}
