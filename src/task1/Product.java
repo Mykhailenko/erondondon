@@ -2,8 +2,10 @@ package task1;
 
 import java.text.MessageFormat;
 
+import task2_2.AbstractArticul;
+
 public abstract class Product {
-	private String id;
+	private AbstractArticul articul;
 	private String title;
 	private String producer;
 	private String description;
@@ -12,9 +14,9 @@ public abstract class Product {
 	}
 	
 	
-	protected Product(String id, String title, String producer, String description) {
+	protected Product(AbstractArticul articul, String title, String producer, String description) {
 		super();
-		this.id = id;
+		this.articul = articul;
 		this.title = title;
 		this.producer = producer;
 		this.description = description;
@@ -25,7 +27,7 @@ public abstract class Product {
 	public String toString() {
 		return MessageFormat.format(
 				"Product [id={0}, title={1}, producer={2}, description={3}]",
-				id, title, producer, description);
+				articul, title, producer, description);
 	}
 
 
@@ -33,7 +35,7 @@ public abstract class Product {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + ((articul == null) ? 0 : articul.hashCode());
 		return result;
 	}
 
@@ -46,10 +48,10 @@ public abstract class Product {
 		if (getClass() != obj.getClass())
 			return false;
 		final Product other = (Product) obj;
-		if (id == null) {
-			if (other.id != null)
+		if (articul == null) {
+			if (other.articul != null)
 				return false;
-		} else if (!id.equals(other.id))
+		} else if (!articul.equals(other.articul))
 			return false;
 		return true;
 	}
@@ -71,13 +73,15 @@ public abstract class Product {
 		this.producer = producer;
 	}
 
+	
 
-	public String getId() {
-		return id;
+	public AbstractArticul getArticul() {
+		return articul;
 	}
 
-	public void setId(String id) {
-		this.id = id;
+
+	public void setArticul(AbstractArticul articul) {
+		this.articul = articul;
 	}
 
 

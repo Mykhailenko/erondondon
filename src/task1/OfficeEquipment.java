@@ -2,6 +2,8 @@ package task1;
 
 import java.text.MessageFormat;
 
+import task2_2.AbstractArticul;
+
 public class OfficeEquipment extends Product {
 	public enum Format {
 		A5, A4, A3;
@@ -20,10 +22,10 @@ public class OfficeEquipment extends Product {
 		super();
 	}
 	
-	public OfficeEquipment(String id, String title, String producer, String description, 
+	public OfficeEquipment(AbstractArticul articul, String title, String producer, String description, 
 			Format format,	PrintingTechnology printingTechnology, 
 			boolean colorPrinting,	boolean wifi, boolean usb2_0) {
-		super(id, title, producer, description);
+		super(articul, title, producer, description);
 		this.format = format;
 		this.printingTechnology = printingTechnology;
 		this.colorPrinting = colorPrinting;
@@ -35,9 +37,9 @@ public class OfficeEquipment extends Product {
 	@Override
 	public String toString() {
 		return MessageFormat
-				.format("OfficeEquipment [format={0}, printingTechnology={1}, colorPrinting={2}, wifi={3}, usb2_0={4}, getTitle()={5}, getProducer()={6}, getDescription()={7}]",
+				.format("OfficeEquipment [format={0}, printingTechnology={1}, colorPrinting={2}, wifi={3}, usb2_0={4}, getTitle()={5}, getProducer()={6}, getArticul()={7}, getDescription()={8}]",
 						format, printingTechnology, colorPrinting, wifi, usb2_0, getTitle(),
-						getProducer(), getDescription());
+						getProducer(), getArticul(), getDescription());
 	}
 
 	public Format getFormat() {

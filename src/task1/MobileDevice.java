@@ -2,6 +2,8 @@ package task1;
 
 import java.text.MessageFormat;
 
+import task2_2.AbstractArticul;
+
 public class MobileDevice extends Product{
 	public enum OS {
 		Android, iOS, Windows_7, Tablet_OS, Bada, MeeGo, Symbian; 
@@ -16,11 +18,11 @@ public class MobileDevice extends Product{
 		super();
 	}
 	
-	public MobileDevice(String id, String title, String producer,
+	public MobileDevice(AbstractArticul articul, String title, String producer,
 			String description,	double diagonal, 
 			OS os, int batteryCapacity, boolean gPS, 
 			double cameraResolution) {
-		super(id, title, producer, description);
+		super(articul, title, producer, description);
 		this.diagonal = diagonal;
 		this.os = os;
 		this.batteryCapacity = batteryCapacity;
@@ -33,7 +35,7 @@ public class MobileDevice extends Product{
 		return MessageFormat
 				.format("MobileDevice [diagonal={0}, os={1}, batteryCapacity={2}, GPS={3}, getTitle()={4}, getProducer()={5}, getId()={6}, getDescription()={7}]",
 						diagonal, os, batteryCapacity, GPS, getTitle(),
-						getProducer(), getId(), getDescription());
+						getProducer(), getArticul(), getDescription());
 	}
 
 	public double getDiagonal() {

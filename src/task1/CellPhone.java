@@ -3,7 +3,9 @@ package task1;
 import java.awt.Color;
 import java.text.MessageFormat;
 
-public class CellPhoN extends MobileDevice {
+import task2_2.AbstractArticul;
+
+public class CellPhone extends MobileDevice {
 	public enum ShellType {
 		MONOBLOCK, FOLDING, SLIDER;
 	}
@@ -15,15 +17,15 @@ public class CellPhoN extends MobileDevice {
 	private boolean wifi;
 	private Color color;
 	
-	public CellPhoN() {
+	public CellPhone() {
 		super();
 	}
 
-	public CellPhoN(String id, String title, String producer, String description,
+	public CellPhone(AbstractArticul articul, String title, String producer, String description,
 			double diagonal, OS os, int batteryCapacity, boolean gPS,
 			double cameraResolution,ShellType shellType, boolean sensor, int numberOfSims,
 			 boolean bluetooth, boolean wifi,	Color color) {
-		super(id, title, producer, description, diagonal, os, batteryCapacity, gPS, cameraResolution);
+		super(articul, title, producer, description, diagonal, os, batteryCapacity, gPS, cameraResolution);
 		this.shellType = shellType;
 		this.sensor = sensor;
 		this.numberOfSims = numberOfSims;
@@ -40,7 +42,7 @@ public class CellPhoN extends MobileDevice {
 				.format("CellPhoN [shellType={0}, sensor={1}, numberOfSims={2}, bluetooth={3}, wifi={4}, color={5}, getDiagonal()={6}, getOs()={7}, getBatteryCapacity()={8}, isGPS()={9}, getTitle()={10}, getProducer()={11}, getId()={12}, getDescription()={13}]",
 						shellType, sensor, numberOfSims, bluetooth, wifi, color,
 						getDiagonal(), getOs(), getBatteryCapacity(), isGPS(), getTitle(),
-						getProducer(), getId(), getDescription());
+						getProducer(), getArticul(), getDescription());
 	}
 
 	public ShellType getShellType() {

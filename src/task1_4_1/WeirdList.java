@@ -1,7 +1,6 @@
 package task1_4_1;
 
 import java.lang.reflect.Array;
-import java.nio.ReadOnlyBufferException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -37,7 +36,7 @@ public class WeirdList<E> implements List<E>{
 			if(index >= unmodifiableListSize){
 				modifiableList.add(index - unmodifiableListSize, obj);
 			}else{
-				throw new ReadOnlyBufferException();
+				throw new ReadOnlyContentException();
 			}
 		}else{
 			throw new IndexOutOfBoundsException();
@@ -55,7 +54,7 @@ public class WeirdList<E> implements List<E>{
 			if(index >= unmodifiableListSize){
 				return modifiableList.addAll(index - unmodifiableListSize, obj);
 			}else{
-				throw new ReadOnlyBufferException();
+				throw new ReadOnlyContentException();
 			}
 		}else{
 			throw new IndexOutOfBoundsException();
@@ -148,7 +147,7 @@ public class WeirdList<E> implements List<E>{
 		if(!unmodifiableList.contains(obj)){
 			return modifiableList.remove(obj);
 		}else{
-			throw new ReadOnlyBufferException();
+			throw new ReadOnlyContentException();
 		}
 	}
 
@@ -158,7 +157,7 @@ public class WeirdList<E> implements List<E>{
 			if(index >= unmodifiableListSize){
 				return modifiableList.remove(index - unmodifiableListSize);
 			}else{
-				throw new ReadOnlyBufferException();
+				throw new ReadOnlyContentException();
 			}
 		}else{
 			throw new IndexOutOfBoundsException();
@@ -183,7 +182,7 @@ public class WeirdList<E> implements List<E>{
 			final int sizeAfter = size();
 			return sizeBefore != sizeAfter;
 		}else{
-			throw new ReadOnlyBufferException();
+			throw new ReadOnlyContentException();
 		}
 	}
 
@@ -199,7 +198,7 @@ public class WeirdList<E> implements List<E>{
 			final int sizeAfter = size();
 			return sizeBefore != sizeAfter;
 		}else{
-			throw new ReadOnlyBufferException();
+			throw new ReadOnlyContentException();
 		}
 	}
 
@@ -208,7 +207,7 @@ public class WeirdList<E> implements List<E>{
 		if(index >= unmodifiableListSize){
 			return modifiableList.set(index - unmodifiableListSize, obj);
 		}else{
-			throw new ReadOnlyBufferException();
+			throw new ReadOnlyContentException();
 		}
 	}
 

@@ -294,7 +294,7 @@ public class GlebList<T> implements AdvancedList<T>{
 		public boolean hasNext() {
 			if(nextObject == null){
 				for(int i = currentPosition; i < size; ++i){
-					Object o = get(i);
+					Object o = content[i];
 					if(predicate.condition(o)){
 						nextObject = o;
 						currentPosition = i + 1;

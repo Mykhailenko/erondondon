@@ -1,6 +1,5 @@
 package task1_4_1;
 
-import java.nio.ReadOnlyBufferException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -19,7 +18,7 @@ public class WeirdListTest {
 	private List<String> modifiableList;
 	private List<String> unmodifiableList;
 	private List<String> justList;
-	private WeirdList<String> weirdList;
+	private List<String> weirdList;
 	@SuppressWarnings( { "rawtypes", "unchecked" } )
 	@Before
 	public void init() {
@@ -34,7 +33,7 @@ public class WeirdListTest {
 		modifiableList.add("waste_money_service_2");
 		modifiableList.add("waste_money_service_0");
 		
-		weirdList = new WeirdList(unmodifiableList, modifiableList);
+		weirdList = new StrangeList(unmodifiableList, modifiableList);
 		
 		justList = new ArrayList<String>();
 		justList.add("olololo_0");
@@ -54,7 +53,7 @@ public class WeirdListTest {
 		assertEquals(s, weirdList.get(3));
 	}
 	
-	@Test(expected=ReadOnlyBufferException.class)
+	@Test(expected=ReadOnlyContentException.class)
 	public void addTest2() {
 		String s = "AddtoStartModifiableList";
 		weirdList.add(2, s);
@@ -73,7 +72,7 @@ public class WeirdListTest {
 		assertEquals(9, weirdList.size());
 	}
 	
-	@Test(expected=ReadOnlyBufferException.class)
+	@Test(expected=ReadOnlyContentException.class)
 	public void addAllTest2() {
 		weirdList.addAll(2, justList);
 	}
@@ -148,6 +147,15 @@ public class WeirdListTest {
 		assertTrue(w.isEmpty());
 	}
 
+	@Test(expected=ReadOnlyContentException.class)
+	public void iteratorTest11() {
+		Iterator<String> it = weirdList.iterator();
+		it.hasNext();
+		it.next();
+		it.hasNext();
+		it.next();
+		it.remove();
+	}
 	@Test
 	public void iteratorTest() {
 		List<String> couple = new ArrayList<String>();
@@ -156,11 +164,20 @@ public class WeirdListTest {
 		assertEquals(weirdList.size(), couple.size());
 		Iterator<String> ita = couple.iterator();
 		Iterator<String> itb = weirdList.iterator();
+//		while(ita.hasNext()){
+//			System.out.println(ita.next());
+//		}
+//		while(itb.hasNext()){
+//			System.out.println(itb.next());
+//		}
 		for(int i = 0; i < weirdList.size(); ++i){
+//			System.out.println(i);
+			ita.hasNext();
+			itb.hasNext();
 			assertEquals(ita.next(), itb.next());
 		}
-		assertFalse(ita.hasNext());
-		assertFalse(itb.hasNext());
+//		assertFalse(ita.hasNext());
+//		assertFalse(itb.hasNext());
 	}
 
 	@Test
@@ -177,10 +194,12 @@ public class WeirdListTest {
 		assertEquals("nessesary_service_1", it.next());
 		assertEquals("nessesary_service_2", it.next());
 		it.add("OLOLO");
+		it.hasNext();
 		assertEquals("waste_money_service_0", it.next());
 		assertEquals("waste_money_service_0", it.previous());
 		assertEquals("OLOLO", it.previous());
 		it.remove();
+		it.hasNext();
 		assertEquals("waste_money_service_0", it.next());
 		assertEquals(4, it.nextIndex());
 		it.set("yeah");
@@ -191,20 +210,20 @@ public class WeirdListTest {
 		assertFalse(it.hasNext());
 	}
 
-	@Test(expected=ReadOnlyBufferException.class)
+	@Test(expected=ReadOnlyContentException.class)
 	public void listIteratorTest1() {
 		ListIterator<String> it = weirdList.listIterator();
 		it.next();
 		it.set("asdfasd");
 	}
 
-	@Test(expected=ReadOnlyBufferException.class)
+	@Test(expected=ReadOnlyContentException.class)
 	public void listIteratorTest2() {
 		ListIterator<String> it = weirdList.listIterator();
 		it.next();
 		it.add("asdfasd");
 	}
-	@Test(expected=ReadOnlyBufferException.class)
+	@Test(expected=ReadOnlyContentException.class)
 	public void listIteratorTest3() {
 		ListIterator<String> it = weirdList.listIterator();
 		it.next();
@@ -214,8 +233,10 @@ public class WeirdListTest {
 	@Test
 	public void listIteratorWithIndexTest(){
 		ListIterator<String> it = weirdList.listIterator(3);
+		it.hasNext();
 		assertEquals("waste_money_service_0", it.next());
 		it.remove();
+		assertEquals(true, it.hasPrevious());
 		assertEquals("nessesary_service_2", it.previous());
 	}
 	
@@ -226,7 +247,7 @@ public class WeirdListTest {
 		assertEquals("waste_money_service_1", weirdList.get(3));
 	}
 
-	@Test(expected=ReadOnlyBufferException.class)
+	@Test(expected=ReadOnlyContentException.class)
 	public void removeTest1() {
 		weirdList.remove(2);
 	}
@@ -238,7 +259,7 @@ public class WeirdListTest {
 		assertEquals("waste_money_service_0", weirdList.get(5));
 	}
 
-	@Test(expected=ReadOnlyBufferException.class)
+	@Test(expected=ReadOnlyContentException.class)
 	public void removeTest3() {
 		weirdList.remove("nessesary_service_1");
 	}
@@ -252,7 +273,7 @@ public class WeirdListTest {
 		assertEquals(4, weirdList.size());
 		assertEquals("waste_money_service_1", weirdList.get(3));
 	}
-	@Test(expected=ReadOnlyBufferException.class)
+	@Test(expected=ReadOnlyContentException.class)
 	public void removeAllTest1() {
 		List<String> lst = new ArrayList<String>();
 		lst.add("waste_money_service_0");
@@ -270,7 +291,7 @@ public class WeirdListTest {
 		try{
 			weirdList.removeAll(lst);
 		}
-		catch(ReadOnlyBufferException r){
+		catch(ReadOnlyContentException r){
 			assertTrue(true);
 		}catch(Exception e){
 			assertTrue(false);
@@ -300,7 +321,7 @@ public class WeirdListTest {
 		
 	}
 
-	@Test(expected=ReadOnlyBufferException.class)
+	@Test(expected=ReadOnlyContentException.class)
 	public void retainAllTest2() {
 		List<String> lst = new ArrayList<String>();
 		lst.add("nessesary_service_0");
@@ -318,7 +339,7 @@ public class WeirdListTest {
 		lst.add("waste_money_service_0");
 		try{
 			weirdList.retainAll(lst);
-		}catch(ReadOnlyBufferException r){
+		}catch(ReadOnlyContentException r){
 			assertTrue(true);
 		}catch (Exception e) {
 			assertTrue(false);
