@@ -2,7 +2,8 @@ package task1_5;
 
 import java.util.Comparator;
 
-public class CompareByElse extends Decorator{
+@SuppressWarnings("rawtypes")
+public class CompareByElse extends ChainOfresponsibility{
 
 	public CompareByElse(Comparator<Base> comparator) {
 		super(comparator);
@@ -10,8 +11,8 @@ public class CompareByElse extends Decorator{
 	public CompareByElse() {
 	}
 	@Override
-	public int compare(Base a, Base b) {
-		return a.getSomeelse().compareTo(b.getSomeelse());
+	public int comp(Object a, Object b) {
+		return ((Base)a).getSomeelse().compareTo(((Base)b).getSomeelse());
 	}
 
 }

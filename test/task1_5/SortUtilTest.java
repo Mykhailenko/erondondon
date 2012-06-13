@@ -51,7 +51,7 @@ public class SortUtilTest {
 				return a.getName().compareTo(b.getName());
 			}
 		};
-		SortUtil.sort(pp, compareByName, compareById);
+//		SortUtil.sort(pp, compareByName, compareById);
 //		for(Pair p : pp){
 //			System.out.println(p);
 //		}
@@ -71,15 +71,21 @@ public class SortUtilTest {
 	public void decorator(){
 		List<Base> list = new ArrayList<Base>();
 		list.add(new Base("2", "c", "f"));
-		list.add(new Base("3", "d", "tt"));
+		list.add(new Base("3", "d", "tb"));
+		list.add(new Base("5", "d", "tb"));
 		list.add(new Base("6", "a", "zz"));
 		list.add(new Base("5", "b", "z"));
-		list.add(new Base("4", "d", "tt"));
+		list.add(new Base("4", "d", "ta"));
 		list.add(new Base("1", "e", "f"));
-		SortUtil.sort(list, new CompareByTitle(new CompareByElse(new CompareByID())));
+//		SortUtil.sort(list, new CompareByTitle(new CompareByID(new CompareByElse())));
+//		SortUtil.sort(list, new CompareByTitle(new CompareByElse(new CompareByID())));
 //		Collections.sort(list, new CompareByTitle(new CompareByElse(new CompareByID())));
-//		for(Base b : list){
-//			System.out.println(b);
-//		}
+		Collections.sort(list, new ArrCompare(new CompareByTitle(), 
+				new CompareByID(),
+				new CompareByElse() 
+		));
+		for(Base b : list){
+			System.out.println(b);
+		}
 	}
 }

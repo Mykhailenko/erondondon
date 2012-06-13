@@ -23,7 +23,7 @@ public class ListAsSetTest {
 		list.add(p0);
 		list.add(p1);
 		assertEquals(2, list.size());
-		list.get(1).setId("1");
+		p1.setId("1");
 		assertEquals(list.get(0), list.get(1));
 	}
 	

@@ -2,16 +2,16 @@ package task1_5;
 
 import java.util.Comparator;
 
-public class CompareByTitle extends Decorator{
+public class CompareByTitle<E> extends ChainOfresponsibility<E>{
 
-	public CompareByTitle(Comparator<Base> comparator) {
+	public CompareByTitle(Comparator<E> comparator) {
 		super(comparator);
 	}
 	public CompareByTitle() {
 	}
 	@Override
-	public int compare(Base a, Base b) {
-		return a.getTitle().compareTo(b.getTitle());
+	protected int comp(Object a, Object b) {
+		return ((Base)a).getTitle().compareTo(((Base)b).getTitle());
 	}
 
 }
