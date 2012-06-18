@@ -16,3 +16,13 @@ public class ArticulTest {
 		assertEquals('o'+ 'l' + 'o' + 'l', art.hashCode());
 	}
 }
+/*
+idea : cannot find symbol class
+I have a simple java project in Eclipse and I have decided to try Intellij IDEA 11.
+
+I imported project from github. And then I compiled it and recieved a lot of error in my unit tests. 
+
+All it was sush as "cannot find symbol class %class_which_are_in_some_packege_in_src_folder%".
+
+What did I do wrong?
+*/
