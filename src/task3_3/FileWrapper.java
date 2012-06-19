@@ -5,18 +5,15 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 import org.apache.log4j.Logger;
 
 public class FileWrapper {
 	private static final Logger LOGGER = Logger.getRootLogger();
-	public static Iterable<String> iterable(String fileName) {
+	public static Iterable<String> iterable(String fileName) throws FileNotFoundException {
 		FileReader fr = null;
-		try {
-			fr = new FileReader(fileName);
-		} catch (FileNotFoundException e1) {
-			LOGGER.error(e1);
-		}
+		fr = new FileReader(fileName);
     	final BufferedReader br = new BufferedReader(fr);
     	
     	return new Iterable<String>() {
@@ -30,9 +27,13 @@ public class FileWrapper {
 					}
 					@Override
 					public String next() {
-						String old = line;
-						line = getStrnig();
-						return old;
+						if(line != null){
+							String old = line;
+							line = getStrnig();
+							return old;
+						}else{
+							throw new NoSuchElementException();
+						}
 					}
 					@Override
 					public void remove() {

@@ -166,15 +166,15 @@ public class GlebList<T> implements AdvancedList<T>{
 	}
 	
 	@Override
-	public boolean removeAll(Collection<?> Ò) {
-		for(Object o : Ò){
+	public boolean removeAll(Collection<?> —Å) {
+		for(Object o : —Å){
 			int index =  indexOf(o);
 			while(index != -1){
 				remove(index);
 				index = indexOf(o);
 			}
 		}
-		return !Ò.isEmpty();
+		return !—Å.isEmpty();
 	}
 	
 	@SuppressWarnings("unchecked")
