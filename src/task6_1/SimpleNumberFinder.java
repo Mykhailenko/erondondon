@@ -1,26 +1,34 @@
 package task6_1;
 
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.concurrent.Callable;
 
-public class SimpleNumberFinder extends Thread{
-	private int [] numbers;
+public class SimpleNumberFinder extends Thread implements Callable<List<Integer>>{
+	private int high;
 	private int step;
 	private int from;
-	private List<Integer> simple = new ArrayList<Integer>();
+	private List<Integer> simple;
 	
 	
-	public SimpleNumberFinder(int[] numbers, int step, int from,
+	public SimpleNumberFinder(int high, int step, int from,
 			List<Integer> simple) {
 		super();
-		this.numbers = numbers;
+		this.high = high; 
 		this.step = step;
 		this.from = from;
 		this.simple = simple;
 	}
+	public SimpleNumberFinder(int high, int step, int from) {
+		super();
+		this.high = high; 
+		this.step = step;
+		this.from = from;
+		this.simple = new LinkedList<Integer>();
+	}
 	@Override
 	public void run() {
-		for(int i = from; i < numbers.length; i += step){
+		for(int i = from; i < high; i += step){
 			if(isSimple(i)){
 				simple.add(i);
 			}
@@ -35,6 +43,11 @@ public class SimpleNumberFinder extends Thread{
 		return true;
 	}
 	public List<Integer> getSimple() {
+		return simple;
+	}
+	@Override
+	public List<Integer> call() throws Exception {
+		run();
 		return simple;
 	}
 }

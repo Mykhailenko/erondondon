@@ -3,18 +3,13 @@ package task4_1;
 import java.io.UnsupportedEncodingException;
 
 public class StringConverter {
-	public static byte [] convertUTF8toCP1251(String str) {
-		try {
-			return str.getBytes("cp1251");
-		} catch (UnsupportedEncodingException e) {
-			return null;
-		}
+	public static String convertUTF16toCP1251(String str)
+			throws UnsupportedEncodingException {
+		return new String(str.getBytes("cp1251"), "UTF-16LE");
 	}
-	public String convertCP1251toUTF8(byte [] bs) {
-		try {
-			return new String(bs, "cp1251");
-		} catch (UnsupportedEncodingException e) {
-			return null;
-		}
+
+	public static String convertCP1251toUTF16(String str)
+			throws UnsupportedEncodingException {
+		return new String(str.getBytes("UTF-16LE"), "cp1251");
 	}
 }
