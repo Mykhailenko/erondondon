@@ -25,6 +25,8 @@ public abstract class BaseFileFilter implements FileFilter{
 			return false;
 		}
 	}
+	
+	
 	protected static String getOnlyName(String fileName){
 		int index = fileName.lastIndexOf('.');
 		if(index > 0){

@@ -48,6 +48,7 @@ public class SimpleNumberFinder extends Thread implements Callable<List<Integer>
 	@Override
 	public List<Integer> call() throws Exception {
 		run();
+//		System.out.println("done!");
 		return simple;
 	}
 }

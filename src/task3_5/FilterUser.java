@@ -35,7 +35,7 @@ public class FilterUser {
 		System.out.println("Искать по расширению(1/0)?");
 		x = in.nextInt();
 		if(x == 1){
-			System.out.println("Введите имя");
+			System.out.println("Введите расширение");
 			s = in.next();
 			filter = new FileExtensionFilter(filter).names(s).create();
 		}

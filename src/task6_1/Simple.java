@@ -11,17 +11,31 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
+import org.apache.log4j.Logger;
 
-import task1.CellPhone;
 
 public class Simple {
+	private static final Logger LOGGER = Logger.getLogger("s");
 	public static void main(String [] args) throws InterruptedException, ExecutionException{
-		int N = 6;
-		int SIZE = 10000;
-		benchAfterFuture(N, SIZE);
+		int N = 30;
+		ololo(N, 1000);
+		ololo(N, 10000);
+		ololo(N, 100000);
 	}
-
-	private static void bench(int N, int SIZE) throws InterruptedException {
+	private static void ololo(int N, int SIZE) throws InterruptedException,
+			ExecutionException {
+		for (int i = 1; i <= N; ++i){
+			all(i, SIZE);
+		}
+	}
+	private static void all(int N, int SIZE) throws InterruptedException, ExecutionException{
+		LOGGER.info(N + " , " + 
+							SIZE + " , " + 
+							bench(N, SIZE) + " , " + 
+							benchAfter(N, SIZE) + " , " +
+							benchAfterFuture(N, SIZE));
+	}
+	private static long bench(int N, int SIZE) throws InterruptedException {
 		long start = System.nanoTime();
 		List<SimpleNumberFinder> threads = new ArrayList<SimpleNumberFinder>();
 		List<Integer> synch = Collections.synchronizedList(new LinkedList<Integer>());
@@ -35,9 +49,10 @@ public class Simple {
 			t.join();
 		}
 		long time = System.nanoTime() - start;
-		System.out.println(time);
+		return time;
+//		System.out.println("bench: " + time);
 	}
-	private static void benchAfter(int N, int SIZE) throws InterruptedException {
+	private static long benchAfter(int N, int SIZE) throws InterruptedException {
 		long start = System.nanoTime();
 		List<SimpleNumberFinder> threads = new ArrayList<SimpleNumberFinder>();
 		List<Integer> result = new LinkedList<Integer>();
@@ -55,9 +70,10 @@ public class Simple {
 			result.addAll(thread.getSimple());
 		}
 		long time = System.nanoTime() - start;
-		System.out.println(time);
+//		System.out.println("benchAfter: " + time);
+		return time;
 	}
-	private static void benchAfterFuture(int N, int SIZE) throws InterruptedException, ExecutionException {
+	private static long benchAfterFuture(int N, int SIZE) throws InterruptedException, ExecutionException {
 		long start = System.nanoTime();
 		ExecutorService executor = Executors.newFixedThreadPool(N);
 		List<Future<List<Integer>>> futures = new ArrayList<Future<List<Integer>>>();
@@ -79,6 +95,7 @@ public class Simple {
 			stop = futures.isEmpty();
 		}
 		long time = System.nanoTime() - start;
-		System.out.println(time);
+//		System.out.println("benchAfterFuture: " + time);
+		return time;
 	}
 }
