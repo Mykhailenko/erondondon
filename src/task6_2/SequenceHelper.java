@@ -13,14 +13,12 @@ public class SequenceHelper {
 	private static JFrame f;
 	public static void show(int percent) {
 		if(progressBar == null){
-			f = new JFrame("JProgressBar Sample");
+			f = new JFrame("weird process...");
 			f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 			Container content = f.getContentPane();
 			progressBar = new JProgressBar();
 			progressBar.getModel().setMinimum(0);
 			progressBar.getModel().setMaximum(100);
-//			progressBar.getModel().setExtent(100);
-//			progressBar.setStringPainted(true);
 			Border border = BorderFactory.createTitledBorder("Calculating...");
 			progressBar.setBorder(border);
 			progressBar.setStringPainted(true);
@@ -32,6 +30,7 @@ public class SequenceHelper {
 		if(percent >= 100){
 			f.setVisible(false);
 		}else{
+			f.setVisible(true);
 			progressBar.setString(percent + "%");
 			progressBar.setValue(percent);
 		}

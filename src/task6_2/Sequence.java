@@ -1,42 +1,37 @@
 package task6_2;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.Arrays;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
+import java.util.Scanner;
 
 public class Sequence {
-	
-	public static void main(String[] args) throws IOException, InterruptedException, ExecutionException {
-		byte [] bs = getBytesFromFile(new File("LICENSE"));
-		ExecutorService executor = Executors.newSingleThreadExecutor();
-		SequSearcher ss = new SequSearcher(bs);
-		Future<SeqResult> future = executor.submit(ss);
+	private static Scanner in = new Scanner(System.in);
+	private static MTreadik treadik = new MTreadik();
+	public static void main(String[] args) {
+		treadik.start();
 		while(true){
-			if(future.isDone()){
-				break;
-			}else{
-				SequenceHelper.show(ss.getStatus());
-				try {
-					Thread.sleep(100);
-				} catch (InterruptedException e) {
-					System.err.println(e);
+			System.out.println("Введите имя файла");
+			String fileName = in.next();
+			long start = System.currentTimeMillis();
+			treadik.setFileAndStart(new File(fileName));
+			while (true) {
+				if(treadik.isDone() || treadik.isError()){
+					break;
+				}else{
+					SequenceHelper.show(treadik.getStatus());
+					try {
+						Thread.sleep(100);
+					} catch (InterruptedException e) {
+					}
 				}
 			}
+			SequenceHelper.show(101);
+			if(treadik.isDone()){
+				System.out.println("Completed! " + (System.currentTimeMillis() - start));
+				System.out.println(treadik.getResultAndClear());
+			}else{
+				System.out.println("some error.");
+			}
 		}
-		SequenceHelper.show(101);
-		SeqResult sr = future.get();
-		System.out.println(sr);
-		String f = new String(Arrays.copyOfRange(bs, sr.getFirstIndex(), sr.getFirstIndex() + sr.getSize()));
-		String s = new String(Arrays.copyOfRange(bs, sr.getSecondIndex(), sr.getSecondIndex() + sr.getSize()));
-		System.out.println(f);
-		System.out.println(s);
-		
 	}
 	
 }

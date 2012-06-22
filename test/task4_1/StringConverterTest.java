@@ -48,8 +48,6 @@ public class StringConverterTest {
 			String utf16 = StringConverter.convertCP1251toUTF16(cp1251);
 			System.out.println(utf16);
 			fis.close();
-//			String cp1251 = StringConverter.convertCP1251toUTF16());
-//			fos.write(cp1251.getBytes("UTF-16"));
 			
 		} catch (UnsupportedEncodingException e) {
 			assertTrue(false);
