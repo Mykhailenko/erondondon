@@ -6,11 +6,15 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.Charset;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.SortedMap;
+
+import com.sun.org.apache.bcel.internal.generic.GOTO;
 
 public class Treadik extends Thread{
 	private volatile File file = null;
@@ -53,17 +57,10 @@ public class Treadik extends Thread{
 					}
 				}
 			}
+			result = new SeqResult(0, 0, 0, "0");
 		} catch (IOException e) {
 			error = true;
 		}
-	}
-	private boolean compareArr(byte[] arr, int start_arr, byte[] brr, int start_brr, int size){
-		for (int i = 0; i < size; i++) {
-			if(arr[start_arr + i] != brr[start_brr + i]){
-				return false;
-			}
-		}
-		return true;
 	}
 	public synchronized boolean setFileAndStart(File file){
 		if(this.file == null){
@@ -103,6 +100,14 @@ public class Treadik extends Thread{
 				wait();
 			} catch (InterruptedException e) {	}
 		}
+	}
+	private boolean compareArr(byte[] arr, int start_arr, byte[] brr, int start_brr, int size){
+		for (int i = 0; i < size; i++) {
+			if(arr[start_arr + i] != brr[start_brr + i]){
+				return false;
+			}
+		}
+		return true;
 	}
 	private byte[] getBytesFromFile(File file) throws IOException {
 		if(!file.exists()){
